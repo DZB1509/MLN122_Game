@@ -1,0 +1,292 @@
+body {
+  font-family: Arial, sans-serif;
+  background: url('background.jpg') no-repeat center center/cover; 
+  text-align: center;
+  margin: 0;
+  padding: 0;
+}
+
+#main-layout {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 20px;
+  height: 80vh;
+}
+
+/* HANGMAN SELECTION */
+#hangman-selection {
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+  max-width: 400px;
+  width: 100%;
+}
+
+#hangman-selection h2 {
+  margin-bottom: 20px;
+}
+
+.hangman-btn {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin: 5px 0;
+  font-size: 18px;
+  background: #4169e1;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.hangman-btn:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+.hangman-btn:hover:not(:disabled) {
+  background: #31519b;
+}
+
+/* === INTRO === */
+#intro-screen {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+#intro-video {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+#intro-overlay {
+  position: absolute;
+  bottom: 10px;                 
+  left:  50%;
+  transform: translateX(-50%);
+  text-align: center;
+  color: white;
+  z-index: 1;
+  background: rgba(0, 0, 0, 0.6);
+  padding: 20px 40px;
+  border-radius: 12px;
+  max-width: 90%;
+}
+
+#intro-overlay h1 {
+  font-size: 36px;
+  margin-bottom: 20px;
+}
+
+#unmute-button, #skip-button {
+  padding: 14px 32px;
+  font-size: 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin: 10px;
+}
+
+#unmute-button {
+  background: #28a745;
+  color: white;
+}
+
+#unmute-button:hover { background: #218838; }
+
+#skip-button {
+  background: #35dc8e;
+  color: white;
+}
+
+#skip-button:hover { background: #35dc8e; }
+
+/* === MODAL === */
+#explain-modal {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+}
+
+.modal-content {
+  background: #fff;
+  padding: 30px;
+  border-radius: 12px;
+  text-align: center;
+  max-width: 500px;
+  position: relative;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+}
+
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  font-size: 36px;
+  cursor: pointer;
+  color: #aaa;
+}
+
+.close-btn:hover { color: #000; }
+
+#explain-text {
+  font-size: 24px;
+  line-height: 1.5;
+  margin-bottom: 25px;
+}
+
+#explain-text strong {
+  font-size: 28px;
+  color: #d32f2f;
+}
+
+.modal-btn {
+  padding: 12px 30px;
+  font-size: 18px;
+  background: #1976d2;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.modal-btn:hover { background: #1565c0; }
+
+/* NỔ HŨ & GIẢI MÃ */
+#nohu-modal,
+#giai-ma-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10002;
+  overflow: auto;
+}
+
+.nohu-content, .giama-content {
+  background: linear-gradient(135deg, #ffd700, #ff8c00);
+  color: #000;
+  animation: sparkle 2s infinite;
+  max-width: 90vw;              /* Tăng lên 90% viewport width */
+  width: 600px;                 /* Chiều rộng cố định lớn hơn (hoặc giữ 500px nếu thích) */
+  min-width: 320px;
+  padding: 30px 20px;           /* Giảm padding ngang để tiết kiệm không gian */
+  border-radius: 16px;
+  box-sizing: border-box;       /* Đảm bảo padding không làm tăng width */
+  overflow: hidden;
+}
+@keyframes sparkle {
+  0% { box-shadow: 0 0 20px gold; }
+  50% { box-shadow: 0 0 40px orange; }
+  100% { box-shadow: 0 0 20px gold; }
+}
+/* Responsive cho màn hình nhỏ */
+@media (max-width: 600px) {
+  #hangman-word {
+    font-size: 22px;            /* Nhỏ hơn nữa trên mobile */
+    letter-spacing: 4px;
+  }
+  
+  .modal-content.giama-content {
+    max-width: 95vw;
+    padding: 20px 15px;
+  }
+}
+.meaning strong {
+  font-size: 22px;
+  color: #d32f2f;
+}
+
+/* HANGMAN */
+#hangman-word {
+  font-size: 36px;
+  letter-spacing: 10px;  /* Giữ để cách các chữ cái */
+  white-space: pre-wrap;        /* Cho phép wrap tự động khi quá dài */
+  word-break: break-all;        /* Phá vỡ từ nếu cần (nhưng ưu tiên pre-wrap) */
+  line-height: 1.4;             /* Tăng khoảng cách dòng nếu wrap */
+  margin: 30px 0;               
+  padding: 0 10px;              /* Padding nhỏ hai bên */
+  text-align: center;
+  overflow-wrap: break-word;    /* Hỗ trợ wrap tốt hơn trên mobile */
+  max-width: 100%;
+}
+#giai-ma-modal input {
+  font-size: 24px;
+  width: 60px;
+  text-align: center;
+  text-transform: uppercase;
+}
+.nohu-in-giama {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background: #ff4444;
+  color: white;
+  border: none;
+  border-radius: 6px;
+}
+
+/* 2 NÚT GÓC PHẢI */
+#extra-buttons {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  text-align: right;
+}
+#extra-buttons button {
+  padding: 12px 24px;
+  font-size: 18px;
+  margin: 10px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+#no-hu-btn { background: #ffd700; }
+#giai-ma-btn { background: #4169e1; color: white; }
+#giai-ma-dac-biet-btn {
+  background: #ff4500; /* màu cam đỏ nổi bật */
+  color: white;
+}
+
+/* PHÁO HOA CANVAS */
+#fireworks-canvas {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 9998;
+  opacity: 0;
+  transition: opacity 1s;
+}
+
+#wrong-letters {
+  font-weight: bold;
+}
+
+#wrong-list {
+  letter-spacing: 8px;
+}

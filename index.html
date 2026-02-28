@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Game Giải Mã Cụm Từ</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <!-- Âm thanh -->
+  <audio id="fail-sound" src="fail.mp3" preload="auto"></audio>
+  <audio id="nohu-sound" src="nohu.mp3" preload="auto" loop></audio>
+  <audio id="correct-sound" src="correct.mp3" preload="auto"></audio>
+  <audio id="fireworks-sound" src="fireworks.mp3" preload="auto" loop></audio>
+
+  <!-- MÀN HÌNH INTRO -->
+  <div id="intro-screen">
+    <video id="intro-video" autoplay muted loop playsinline>
+      <source src="intro.mp4" type="video/mp4">
+    </video>
+
+    <div id="intro-overlay">
+      <h1>Chào mừng đến với Game Giải Mã!</h1>
+      <h2>Nơi bạn thuộc về</h2>
+      <button id="unmute-button">🔊 Click me</button>
+      <button id="skip-button">Start game</button>
+    </div>
+  </div>
+
+  <!-- NỘI DUNG CHÍNH (ban đầu ẩn) -->
+  <div id="main-layout" class="hidden">
+    <div id="hangman-selection">
+      <h2>Chọn cụm từ để giải mã:</h2>
+      <!-- List 10 button sẽ được JS tạo -->
+    </div>
+
+    <div id="right-panel" class="hidden"> <!-- Giữ để tương lai nếu cần, nhưng hiện không dùng -->
+    </div>
+  </div>
+
+  <!-- 2 NÚT GÓC PHẢI -->
+  <div id="extra-buttons">
+    <button id="no-hu-btn">🎉 Nổ hũ</button>
+    <button id="giai-ma-btn">🔍 Giải mã</button>
+    <button id="giai-ma-dac-biet-btn">🔑 Giải mã đặc biệt</button>
+  </div>
+
+  <!-- MODAL GIẢI THÍCH -->
+  <div id="explain-modal" class="hidden">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeModal()">×</span>
+      <div id="explain-text"></div>
+      <button class="modal-btn" onclick="closeModal()">Tiếp tục</button>
+    </div>
+  </div>
+
+  <!-- POPUP NỔ HŨ -->
+  <div id="nohu-modal" class="hidden">
+    <div class="modal-content nohu-content">
+      <h2>🎉 Chúc mừng các bạn 🎉</h2>
+      <h1>"Đồng tiền liền khúc ruột"</h1>
+      <p class="meaning">Ý nghĩa: <strong>Trong kinh tế, tiền tệ không chỉ là
+         giấy hay những con số vô tri, mà là hình thức biểu hiện của 
+         lao động xã hội kết tinh và của cải vật chất do con người tạo ra.
+          Vì thế, tiền chỉ thực sự có ý nghĩa khi nó phản ánh nền tảng 
+          sản xuất hiện thực — và không thể được tạo ra một cách tùy tiện hay 
+          vô hạn chỉ bằng ý chí hay mệnh lệnh.</strong></p>
+      <button class="modal-btn" onclick="closeNoHuModal()">Đóng</button>
+    </div>
+  </div>
+
+  <!-- POPUP GIẢI MÃ (HANGMAN) -->
+  <div id="giai-ma-modal" class="hidden">
+    <div class="modal-content giama-content">
+      <h2>🔍 Giải mã cụm từ</h2>
+      <div id="hangman-word"></div>
+      <input type="text" id="guess-letter" maxlength="1" placeholder="Nhập 1 chữ cái" />
+      <button onclick="guessLetter()">Đoán</button>
+      <p id="hangman-error" style="color: #d32f2f; font-weight: bold; margin-top: 15px; min-height: 24px;"></p>
+      <p id="wrong-letters" style="margin-top: 20px; font-size: 20px; color: #d32f2f;">
+        Danh sách các chữ đã đoán sai: <span id="wrong-list"></span>
+      </p>
+      <button class="nohu-in-giama" onclick="showNoHuFromGiaiMa()">🎉 Nổ hũ</button>
+    </div>
+  </div>
+
+  <!-- CANVAS PHÁO HOA -->
+  <canvas id="fireworks-canvas"></canvas>
+
+  <script src="script.js"></script>
+</body>
+
+</html>
